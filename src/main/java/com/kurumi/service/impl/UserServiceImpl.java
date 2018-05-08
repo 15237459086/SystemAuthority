@@ -77,9 +77,9 @@ public class UserServiceImpl implements UserService {
 	public Map<String, List<Map<String, Object>>> getUserRoleInit(String userCode) {
 		// TODO Auto-generated method stub
 		Map<String, List<Map<String, Object>>> datas = new HashMap<String, List<Map<String, Object>>>();
-		List<Map<String, Object>> selectedRoles = userMapper.getSelectedRoleCodeByUserCode(userCode);
+		List<Map<String, Object>> selectedRoles = userMapper.getSelectedRoleByUserCode(userCode);
 		datas.put("selectedRoles", selectedRoles);
-		List<Map<String, Object>> unSelectedRoles = userMapper.getUnSelectedRoleCodeByUserCode(userCode);
+		List<Map<String, Object>> unSelectedRoles = userMapper.getUnSelectedRoleByUserCode(userCode);
 		datas.put("unSelectedRoles", unSelectedRoles);
 		return datas;
 	}

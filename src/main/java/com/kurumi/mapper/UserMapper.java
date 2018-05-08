@@ -33,9 +33,9 @@ public interface UserMapper {
     int getUserCountByQueryUser(UserQuery record);
     
     
-    List<Map<String, Object>> getSelectedRoleCodeByUserCode(@Param("userCode") String userCode);
+    List<Map<String, Object>> getSelectedRoleByUserCode(@Param("userCode") String userCode);
     
-    List<Map<String, Object>> getUnSelectedRoleCodeByUserCode(@Param("userCode") String userCode);
+    List<Map<String, Object>> getUnSelectedRoleByUserCode(@Param("userCode") String userCode);
     
     
     int deleteUserRoleByUserCode(@Param("userCode") String userCode);

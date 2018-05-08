@@ -110,26 +110,45 @@
 	</form>
 </div>
 <div hidden="hidden" id="user_role_div">
-	<div class="row" style="width: 400px;">
-    <div class="col-xs-5">
-        <select name="from[]" id="multiselect1" class="form-control" size="8" multiple="multiple">
-            <option value="1">Item 1</option>
-            <option value="2">Item 5</option>
-            <option value="2">Item 2</option>
-            <option value="2">Item 4</option>
-            <option value="3">Item 3</option>
-        </select>
+	<form action="">
+	<div class="search_table" style="width: 380px; margin-left: 10px;">
+		<ul>
+   
+		    <li class="Label_1" style="width: 40%">角色编号：&nbsp;</li>
+		    <li class="Label_2" style="width: 60%"><input class="input_box" type="text" readonly="readonly" name="roleCode"/></li>
+		    <li class="Label_1" style="width: 40%">角色名称：&nbsp;</li>
+		    <li class="Label_2" style="width: 60%"><input class="input_box" type="text" disabled="disabled" name="roleName" /></li>
+	    </ul>
     </div>
-    
-    <div class="col-xs-2">
-        <button type="button" id="multiselect1_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
-        <button type="button" id="multiselect1_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
-        <button type="button" id="multiselect1_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
-        <button type="button" id="multiselect1_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
-    </div>
-    
-    <div class="col-xs-5">
-        <select name="to[]" id="multiselect1_to" class="form-control" size="8" multiple="multiple"></select>
-    </div>
-</div>
+	<div class="row" style="width: 380px; margin-left: 10px;">
+		<div class="col-xs-12">
+		       	 已选权限
+		</div>
+	    <div class="col-xs-5">
+	        <select id="multiselect1" class="form-control" size="8" multiple="multiple">
+	            
+	        </select>
+	    </div>
+	    
+	    <div class="col-xs-2">
+	        <button type="button" id="multiselect1_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+	        <button type="button" id="multiselect1_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+	        <button type="button" id="multiselect1_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+	        <button type="button" id="multiselect1_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+	    </div>
+	    
+	    <div class="col-xs-5">
+	        <select id="multiselect1_to" class="form-control" size="8" multiple="multiple"></select>
+	    </div>
+	    
+	</div>
+	<div class="search_table" style="width: 380px;margin-left: 10px;">
+		 <ul>
+		 	<li class="Label_5">
+		   
+		     <a onclick="updateRoleAuthorityFormSubmit()">保存</a>
+		    </li>
+		 </ul>
+	</div>
+	</form>
 </div>

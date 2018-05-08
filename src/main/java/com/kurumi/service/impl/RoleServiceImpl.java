@@ -1,5 +1,6 @@
 package com.kurumi.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,16 +50,43 @@ public class RoleServiceImpl implements RoleService {
 		return count;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Map<String, Object>> getRoleByQueryRole(RoleQuery record) {
 		// TODO Auto-generated method stub
 		return roleMapper.getRoleByQueryRole(record);
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public int getRoleCountByQueryRole(RoleQuery record) {
 		// TODO Auto-generated method stub
 		return roleMapper.getRoleCountByQueryRole(record);
+	}
+
+	@Transactional(readOnly=true)
+	@Override
+	public Map<String, List<Map<String, Object>>> getRoleAuthorityInit(String roleCode) {
+		// TODO Auto-generated method stub
+		Map<String, List<Map<String, Object>>> datas = new HashMap<String, List<Map<String, Object>>>();
+		List<Map<String, Object>> selectedAuthoritys = roleMapper.getSelectedAuthorityByRoleCode(roleCode);
+		datas.put("selectedAuthoritys", selectedAuthoritys);
+		List<Map<String, Object>> unSelectedAuthoritys = roleMapper.getUnSelectedAuthorityByRoleCode(roleCode);
+		datas.put("unSelectedAuthoritys", unSelectedAuthoritys);
+		return datas;
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public int updateRoleAuthority(String roleCode, String[] authorityCodes) {
+		// TODO Auto-generated method stub
+		roleMapper.deleteRoleAuthorityByRoleCode(roleCode);
+		if(authorityCodes != null){
+			for (String authorityCode : authorityCodes) {
+				roleMapper.insertRoleAuthority(roleCode, authorityCode);
+			}
+		}
+		return 1;
 	}
 
 	

@@ -277,7 +277,7 @@
   </select>
   
   
-  <select id="getSelectedRoleCodeByUserCode" resultType="map">
+  <select id="getSelectedRoleByUserCode" resultType="map">
     select 
     	role.role_code, role.role_name
     from user_roles
@@ -287,7 +287,7 @@
     
   </select>
   
-  <select id="getUnSelectedRoleCodeByUserCode" resultType="map">
+  <select id="getUnSelectedRoleByUserCode" resultType="map">
      select 
     	role.role_code,role.role_name
     from role

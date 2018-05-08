@@ -54,7 +54,20 @@ public class RoleController {
 		return respondResult;
 	}
 	
-	
+	@GetMapping("/ajax_role_authority_init")
+	@ResponseBody
+	public RespondResult ajaxRoleAuthorityInit(String roleCode,HttpServletRequest request){
+		RespondResult respondResult = null;
+		try{
+			Map<String, List<Map<String, Object>>> datas = roleService.getRoleAuthorityInit(roleCode);
+			respondResult = new RespondResult(true, RespondResult.successCode, "查询", datas);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(),e.getMessage());
+		}
+		return respondResult;
+	}
 	
 	@PostMapping("/ajax_create_role")
 	@ResponseBody
@@ -95,6 +108,28 @@ public class RoleController {
 			else{
 				respondResult = new RespondResult(true, RespondResult.errorCode, "编辑角色失败", "编辑角色失败");
 			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(),e.getMessage());
+		}
+		
+		return respondResult;
+	}
+	
+	
+	@PostMapping("/ajax_update_role_authority")
+	@ResponseBody
+	public RespondResult ajaxUpdateRoleAuthority(String roleCode,String[] authorityCodes, HttpServletRequest request){
+  		RespondResult respondResult = null;
+		try{
+			int count = roleService.updateRoleAuthority(roleCode, authorityCodes);
+			if(count == 1){
+				respondResult = new RespondResult(true, RespondResult.successCode, "设置权限成功", "设置权限成功");
+			}else{
+				respondResult = new RespondResult(true, RespondResult.errorCode, "设置权限失败", "设置权限失败");
+			}
+		
 		}
 		catch (Exception e) {
 			// TODO: handle exception

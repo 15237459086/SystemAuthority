@@ -213,4 +213,32 @@
     	id, role_code, role_name, role_desc, version
     from role
   </select>
+  
+  <select id="getSelectedAuthorityByRoleCode" resultType="map">
+    select 
+    	authority.authority_code, authority.authority_name
+    from role_authoritys
+    inner join authority
+    on authority.authority_code = role_authoritys.authority_code
+    where role_authoritys.role_code= #{roleCode}
+    
+  </select>
+  
+  <select id="getUnSelectedAuthorityByRoleCode" resultType="map">
+    select 
+    	authority.authority_code,authority.authority_name
+    from authority
+	where authority.authority_code not in (select authority_code from role_authoritys where role_code = #{roleCode} )
+  </select>
+  
+  
+  <delete id="deleteRoleAuthorityByRoleCode">
+    delete from role_authoritys
+    where role_code = #{roleCode}
+  </delete>
+  
+  <insert id="insertRoleAuthority">
+    insert into role_authoritys (role_code,authority_code)
+    values (#{roleCode,jdbcType=VARCHAR}, #{authorityCode,jdbcType=VARCHAR})
+  </insert>
 </mapper>

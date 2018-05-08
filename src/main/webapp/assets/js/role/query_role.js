@@ -285,6 +285,7 @@ function updateRow(role){
 var layerRoleAuthorityIndex
 function layerRoleAuthority(obj){
 	
+	var basePath = $("#basePath").val();
 	//页面层
 	var add_content=$("#user_role_div").clone();
 	add_content.find("select[id^='multiselect1'],button[id^='multiselect1']").each(function(){
@@ -292,7 +293,10 @@ function layerRoleAuthority(obj){
 		$(this).attr("id",orignalId.replace("multiselect1", "multiselect1_1"));
        
 	});
+	var content = $(obj).parent().parent();
 	
+	
+	add_content.find("form").attr("id","update_role_authority_form");
 	/*add_content.find("form").attr("id","addForm");
 	*/
 	layerRoleAuthorityIndex = layer.open({
@@ -302,8 +306,91 @@ function layerRoleAuthority(obj){
 	  area: ['420px', '450px'], //宽高
 	  content: add_content.html(),
 	  success: function(layero, index){
+		  var roleCode = content.find(".role_code").html();
+		  $("#update_role_authority_form input[name='roleCode']").val(roleCode);
+		  var roleName = content.find(".role_name").html();
+		  $("#update_role_authority_form input[name='roleName']").val(roleName);
+		  $.ajax({
+				url: basePath + "role/ajax_role_authority_init",
+				dataType: "json",
+				data:{roleCode:roleCode},
+				success: function( data ) {
+					var datas = data['data'];
+					var selectedAuthoritys = datas['selectedAuthoritys'];
+					var unSelectedAuthoritys = datas['unSelectedAuthoritys'];
+					$("#multiselect1_1_to").each(function(){
+						var options = "";
+						for(var index in unSelectedAuthoritys){
+							var unSelectedAuthority = unSelectedAuthoritys[index];
+					    	options+="<option value='"+unSelectedAuthority.authority_code+"' >"+unSelectedAuthority.authority_name+"</option>"
+					    } 
+				       $(this).append(options);
+				       
+					});
+					
+					$("#multiselect1_1").each(function(){
+						var options = "";
+						for(var index in selectedAuthoritys){
+							var selectedAuthority = selectedAuthoritys[index];
+					    	options+="<option value='"+selectedAuthority.authority_code+"'>"+selectedAuthority.authority_name+"</option>"
+					    } 
+				       $(this).append(options);
+				       
+					});
+					console.log(data);
+					
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+					layer.msg("未知错误，请联系管理员");
+				},
+				complete:function(XMLHttpRequest, textStatus){
+					layer.closeAll('loading');
+				}
+			});
 		  $('#multiselect1_1').multiselect();
 		
 	  }
+	});
+}
+
+function updateRoleAuthorityFormSubmit(){
+	layer.load(1);
+	var basePath = $("#basePath").val();
+	var submitData = $('#update_role_authority_form').serialize();
+	var authorityOptions = $("#multiselect1_1 option");
+	var athorityCodes ="";
+	authorityOptions.each(function(){
+		athorityCodes += "&authorityCodes="+$(this).val();
+       
+	});
+	submitData +=athorityCodes;
+	$.ajax({
+		url: basePath + "role/ajax_update_role_authority",
+		type: "POST",
+		dataType: "json",
+		data:submitData,
+		success: function( data ) {
+			var success = data['success'];
+			if(success){
+				var stateCode = data['stateCode'];
+				var stateMessage = data['stateMessage'];
+				if("1" == stateCode){
+					layer.msg(stateMessage);
+					layer.close(layerRoleAuthorityIndex);
+				}else{
+					layer.msg(stateMessage);
+				}
+			}else{
+				layer.msg("操作错误，请重试！");
+			}
+			console.log(data);
+			
+		},
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			layer.msg("未知错误，请联系管理员");
+		},
+		complete:function(XMLHttpRequest, textStatus){
+			layer.closeAll('loading');
+		}
 	});
 }

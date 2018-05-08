@@ -35,4 +35,12 @@ public interface RoleMapper {
     int getRoleCountByQueryRole(RoleQuery record);
     
     List<Map<String, Object>> getRoles();
+    
+    List<Map<String, Object>> getSelectedAuthorityByRoleCode(@Param("roleCode") String roleCode);
+    
+    List<Map<String, Object>> getUnSelectedAuthorityByRoleCode(@Param("roleCode") String roleCode);
+    
+    int deleteRoleAuthorityByRoleCode(@Param("roleCode") String roleCode);
+    
+    int insertRoleAuthority(@Param("roleCode") String roleCode,@Param("authorityCode") String authorityCode);
 }

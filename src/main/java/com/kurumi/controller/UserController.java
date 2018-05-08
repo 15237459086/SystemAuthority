@@ -56,7 +56,7 @@ public class UserController {
 	
 	@GetMapping("/ajax_user_role_init")
 	@ResponseBody
-	public RespondResult ajaxUserroleInit(String userCode,HttpServletRequest request){
+	public RespondResult ajaxUserRoleInit(String userCode,HttpServletRequest request){
 		RespondResult respondResult = null;
 		try{
 			Map<String, List<Map<String, Object>>> datas = userService.getUserRoleInit(userCode);
