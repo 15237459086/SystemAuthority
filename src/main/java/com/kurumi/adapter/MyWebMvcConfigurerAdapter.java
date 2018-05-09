@@ -19,6 +19,7 @@ public class MyWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
 		// TODO Auto-generated method stub
 		registry.addInterceptor(new SecurityHandlerInterceptor()).
 		excludePathPatterns("/login*").
+		excludePathPatterns("/romote_login*").
 		excludePathPatterns("/captcha/*").
 		/*excludePathPatterns("/user/*").*/
 		addPathPatterns("/**");

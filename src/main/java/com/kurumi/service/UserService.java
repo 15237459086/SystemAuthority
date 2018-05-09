@@ -13,6 +13,10 @@ public interface UserService {
 
 	List<Map<String, Object>> getSupperAdminByLoginNameAndPassword(String loginName, String password);
 	
+	List<Map<String, Object>> getUserByLoginNameAndPassword(String loginName,String password);
+    
+	List<Map<String, Object>> getUserByUserCode(String userCode);
+	
 	int insert(User record);
 	
 	int update(User record);
@@ -24,4 +28,12 @@ public interface UserService {
 	Map<String,List<Map<String, Object>>> getUserRoleInit(String userCode);
 
 	int updateUserRole(String userCode,String[] roleCodes);
+	
+	
+	Map<String, Object> remoteLoginCheck(String loginName,String password);
+	
+	int updatePassword(Integer id,String oldPassword,String newPassword);
+	
+	
+	int initPassword(Integer id,String password);
 }

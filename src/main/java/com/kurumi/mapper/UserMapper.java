@@ -24,6 +24,10 @@ public interface UserMapper {
     
     List<Map<String, Object>> getSupperAdminByLoginNameAndPassword(@Param("loginName") String loginName,@Param("password") String password);
     
+    List<Map<String, Object>> getUserByLoginNameAndPassword(@Param("loginName") String loginName,@Param("password") String password);
+    
+    List<Map<String, Object>> getUserByUserCode(@Param("userCode") String userCode);
+    
     int getUserByCodeOrName(@Param("userCode") String userCode,@Param("userName") String userName);
     
     int getUserByCodeOrNameAndId(@Param("userCode") String userCode,@Param("userName") String userName,@Param("id") Integer id);
@@ -37,8 +41,14 @@ public interface UserMapper {
     
     List<Map<String, Object>> getUnSelectedRoleByUserCode(@Param("userCode") String userCode);
     
+    List<Map<String, Object>> getSelectedAuthorityByUserCode(@Param("userCode") String userCode);
     
     int deleteUserRoleByUserCode(@Param("userCode") String userCode);
     
     int insertUserRole(@Param("userCode") String userCode,@Param("roleCode") String roleCode);
+    
+    int updatePassword(@Param("id")Integer id,@Param("oldPassword")String oldPassword,@Param("newPassword")String newPassword);
+    
+    
+    int initPassword(@Param("id")Integer id,@Param("password")String password);
 }

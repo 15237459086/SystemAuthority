@@ -219,6 +219,20 @@
     where user_code = #{loginName} and password = #{password} and supper='1'
   </select>
   
+  <select id="getUserByLoginNameAndPassword" resultType="map" >
+    select 
+    	id, user_code, user_name, user_nick_name, user_desc, id_number, tele_phone, status, version
+    from user
+    where user_code = #{loginName} and password = #{password} and supper='0' and status = '1'
+  </select>
+  
+  <select id="getUserByUserCode" resultType="map" >
+    select 
+    	id, user_code, user_name, user_nick_name, user_desc, id_number, tele_phone, status, version
+    from user
+    where user_code = #{userCode} and supper='0' and status = '1'
+  </select>
+  
   <select id="getUserByCodeOrName" resultType="int" >
     select 
     	count(id)
@@ -295,6 +309,19 @@
     
   </select>
   
+   <select id="getSelectedAuthorityByUserCode" resultType="map">
+    select distinct authority.id, authority.authority_code,authority.authority_name 
+	from authority
+	inner join role_authoritys
+	on role_authoritys.authority_code = authority.authority_code
+	inner join role
+	on role.role_code = role_authoritys.role_code
+	inner join user_roles
+	on user_roles.role_code = role.role_code
+	where user_roles.user_code = #{userCode}
+    
+  </select>
+  
   <delete id="deleteUserRoleByUserCode">
     delete from user_roles
     where user_code = #{userCode}
@@ -304,5 +331,19 @@
     insert into user_roles (user_code,role_code)
     values (#{userCode,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR})
   </insert>
+  
+  <update id="updatePassword">
+    update user
+    set password = #{newPassword,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER} and password = #{oldPassword,jdbcType=INTEGER}
+  </update>
+  
+  
+  <update id="initPassword">
+    update user
+    set password = #{password,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
   
 </mapper>

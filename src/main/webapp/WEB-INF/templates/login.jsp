@@ -77,11 +77,13 @@
 </body>
 <script type="text/javascript">
 	$(function(){
-		
+		var basePath = $("#basePath").val();
+		if(parent.document.getElementById("mainContent")){
+			parent.location.href=basePath+"login";
+		}
 		var validator = $("#loginForm").validate({
 			errorElement: "title",
 			submitHandler : function(){
-				var basePath = $("#basePath").val();
 				layer.load(1);
     			var submitData = $('#loginForm').serialize();
     			$.ajax({
@@ -137,56 +139,5 @@
 	function login(){
     	$("#loginForm").submit();
     }
-	
-    /* function login(){
-    	var basePath = $("#basePath").val();
-    	var userName= $("#loginName").val();
-    	var password=$("#password").val();
-    	if(!userName){
-    		layer.msg("用户名不能为空!");
-    		return;
-    	}
-    	if(!password){
-    		layer.msg("密码不能为空!");
-    		return;
-    	}
-    	var verificationCode=$("#verificationCode").val();
-    	if(!verificationCode){
-    		layer.msg("验证码不能为空!");
-    		return;
-    	}
-    	layer.load(1);
-    	var submitData = $('#loginForm').serialize();
-    	$.ajax({
-			url: basePath + "login_check",
-			type:"POST",
-			dataType: "json",
-			data:submitData,
-			success: function( data ) {
-				console.log(data);
-				var success = data['success'];
-				if(success){
-					var stateCode = data['stateCode'];
-					if(1==stateCode){
-						layer.msg("登陆成功");
-						window.location.replace(basePath);
-					}else{
-						var resultData = data['data'];
-						layer.msg(resultData);
-					}
-				}else{
-					var resultData = data['data'];
-					layer.msg(resultData);
-				}
-				
-			},
-			error:function(XMLHttpRequest, textStatus, errorThrown){
-				layer.msg("未知错误，请联系管理员");
-			},
-			complete:function(XMLHttpRequest, textStatus){
-				layer.closeAll('loading');
-			}
-		});
-    } */
 </script>
 </html>

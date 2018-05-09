@@ -31,15 +31,26 @@ public class MyShiroRealm extends AuthorizingRealm {
 		// TODO Auto-generated method stub
 	 	/*User user = (User)SecurityUtils.getSubject().getPrincipal();*/
         SimpleAuthorizationInfo info =  new SimpleAuthorizationInfo();
-        //获取用户角色
+        Subject subject=SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		String currentRole =(String) session.getAttribute("currentRole");
+		//获取用户角色
         Set<String> roleSet = new HashSet<String>();
-        roleSet.add("admin");
-        info.setRoles(roleSet);
-
-        //获取用户权限
+      //获取用户权限
         Set<String> permissionSet = new HashSet<String>();
-        permissionSet.add("admin");
-        info.setStringPermissions(permissionSet);
+		if(currentRole != null){
+			/*roleSet.add("admin");*/
+			roleSet.add(currentRole);
+	        
+	        /*permissionSet.add("admin");*/
+	        permissionSet.add(currentRole);
+	        
+		}
+        
+		info.setRoles(roleSet);
+
+		info.setStringPermissions(permissionSet);
+       
         return info;
 	}
 
@@ -51,14 +62,23 @@ public class MyShiroRealm extends AuthorizingRealm {
         String password = String.valueOf(token.getPassword());
        
         List<Map<String, Object>> users = userMapper.getSupperAdminByLoginNameAndPassword(loginName, password);
-        if(users.isEmpty()){
-			return null;
-		}
         Subject subject=SecurityUtils.getSubject();
 		Session session = subject.getSession();
+        if(!users.isEmpty()){
+    		session.setAttribute("currentRole", "admin");
+		}else{
+			
+			users = userMapper.getUserByLoginNameAndPassword(loginName, password);
+			if(!users.isEmpty()){
+				session.setAttribute("currentRole", "user");
+			}else{
+				return null;
+			}
+			
+		}
+        
 		Map<String, Object> currentUser = users.get(0);
 		session.setAttribute("currentUser",currentUser);
-       
 
 	    return new SimpleAuthenticationInfo(loginName, password, getName());
 	}

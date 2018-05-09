@@ -15,17 +15,20 @@ request.setAttribute("basePath", basePath);
 <div id="list_main">
 	<div id="list_DH">
 	  <div class="list_menu2">
-	   <h3>系统管理</h3>
-	   <shiro:hasRole name="admin">  
+	  	<h3>系统管理</h3>
+	   	<shiro:hasRole name="admin">  
 	   	<h4 class="li_t"><a onclick="loadContent('${basePath }user/query_user')">用户管理</a></h4>
 	  
 		</shiro:hasRole>   
-	   
-	   <h4 class="li_t"><a onclick="loadContent('${basePath }role/query_role')">角色管理</a></h4>
-	  
-	  <h4 class="li_t"><a onclick="loadContent('${basePath }authority/query_authority')">权限管理</a></h4>
-	  
-	  
+	   	<shiro:hasRole name="admin">
+	   	<h4 class="li_t"><a onclick="loadContent('${basePath }role/query_role')">角色管理</a></h4>
+	  	</shiro:hasRole>
+	  	<shiro:hasRole name="admin">
+	  	<h4 class="li_t"><a onclick="loadContent('${basePath }authority/query_authority')">权限管理</a></h4>
+	  	</shiro:hasRole>
+	  	<shiro:hasRole name="user">
+	  	<h4 class="li_t"><a onclick="loadContent('${basePath }user/person_user')">个人设置</a></h4>
+	  	</shiro:hasRole>
 	  </div>
 	 </div>
 	<div id="list_NR">

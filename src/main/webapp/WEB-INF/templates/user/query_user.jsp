@@ -66,6 +66,7 @@
 	      <td class="tdLabel_5">
 	      	<a class="operate_pigeonhole" onclick="layerUpdateUser(this)" title="编辑">编辑&nbsp;</a>
 	      	&nbsp;&nbsp;<a class="operate_pigeonhole" onclick="layerUserRole(this)" title="设置角色">设置角色&nbsp;</a>
+	      	&nbsp;&nbsp;<a class="operate_pigeonhole" onclick="initPassword(this)" title="初始化密码">初始化密码&nbsp;</a>
 	      </td>
 	     </tr>
       	
@@ -120,7 +121,7 @@
 		 <ul>
    
 		    <li class="Label_1" style="width: 40%">用户编号：&nbsp;</li>
-		    <li class="Label_2" style="width: 60%"><input class="input_box" type="text" name="userCode"/></li>
+		    <li class="Label_2" style="width: 60%"><input class="input_box" readonly="readonly" type="text" name="userCode"/></li>
 		    <li class="Label_1" style="width: 40%">用户名：&nbsp;</li>
 		    <li class="Label_2" style="width: 60%"><input class="input_box" type="text" name="userName" /></li>
 		    <li class="Label_1" style="width: 40%">用户昵称：&nbsp;</li>

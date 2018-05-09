@@ -1,11 +1,17 @@
 package com.kurumi.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kurumi.pojo.RespondResult;
 import com.kurumi.service.UserService;
+import com.kurumi.util.JsonUtil;
 import com.kurumi.util.MD5Util;
 
 @Controller
 public class HomeController {
 
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/")
 	public String home(){
@@ -27,7 +36,7 @@ public class HomeController {
 		return "index.default";
 	}
 	
-	@RequiresRoles("admin")
+	/*@RequiresRoles("admin")*/
 	@GetMapping("/index")
 	public String index(){
 		return "index.default";
@@ -36,6 +45,17 @@ public class HomeController {
 	@GetMapping("/login")
 	public String login(){
 		return "login";
+	}
+	
+	@GetMapping("/login_out")
+	public String loginOut(){
+		Subject subject=SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		session.removeAttribute("currentRole");
+		session.removeAttribute("currentUser");
+		SecurityUtils.getSubject().logout();
+		
+		return "redirect:/login"; 
 	}
 	
 	
@@ -59,6 +79,51 @@ public class HomeController {
 			}else{
 				respondResult = new RespondResult(true, RespondResult.errorCode, "验证码不能为空", "验证码不能为空");
 			}
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			if(e instanceof UnknownAccountException){
+				respondResult = new RespondResult(true, RespondResult.errorCode, "用户名或密码错误", "用户名或密码错误");
+			}else{
+				respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(),e.getMessage());
+			}
+			
+			
+		}
+		
+		return respondResult;
+		
+		
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@PostMapping("/romote_login_check")
+	@ResponseBody
+	public RespondResult remoteLoginCheck(HttpServletRequest request,HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		RespondResult respondResult = null;
+		try{
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(), "utf-8"));  
+			StringBuffer sb = new StringBuffer("");  
+			String temp;  
+			while ((temp = br.readLine()) != null) {  
+				sb.append(temp);  
+			}  
+			br.close();
+			String postDataJson = sb.toString();
+			Map<String, Object> postData = JsonUtil.jsonToPojo(postDataJson, Map.class);
+			String loginName =(String)postData.get("loginName");
+			String password =(String)postData.get("password");
+			Map<String, Object>  datas = userService.remoteLoginCheck(loginName, password);
+			if(datas != null){
+				respondResult = new RespondResult(true, RespondResult.successCode, "登陆成功", datas);
+			}else{
+				respondResult = new RespondResult(true, RespondResult.errorCode, "登录名或密码错误", "");
+			}
+			
 			
 		}
 		catch (Exception e) {

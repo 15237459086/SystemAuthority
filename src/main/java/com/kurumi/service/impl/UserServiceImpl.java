@@ -97,6 +97,51 @@ public class UserServiceImpl implements UserService {
 		return 1;
 	}
 
+	@Transactional(readOnly=true)
+	@Override
+	public List<Map<String, Object>> getUserByLoginNameAndPassword(String loginName, String password) {
+		// TODO Auto-generated method stub
+		return userMapper.getUserByLoginNameAndPassword(loginName, password);
+	}
+
+	@Transactional(readOnly=true)
+	@Override
+	public Map<String, Object> remoteLoginCheck(String loginName, String password) {
+		// TODO Auto-generated method stub
+		Map<String, Object> datas = new HashMap<String, Object>();
+		List<Map<String, Object>> users = userMapper.getUserByLoginNameAndPassword(loginName, password);
+		if(users.isEmpty()){
+			return null;
+		}
+		datas.put("currentUser", users.get(0));
+		List<Map<String, Object>> roles = userMapper.getSelectedRoleByUserCode(loginName);
+		datas.put("roles", roles);
+		List<Map<String, Object>> authoritys = userMapper.getSelectedAuthorityByUserCode(loginName);
+		datas.put("authoritys", authoritys);
+		return datas;
+	}
+
+	@Transactional(readOnly=true)
+	@Override
+	public List<Map<String, Object>> getUserByUserCode(String userCode) {
+		// TODO Auto-generated method stub
+		return userMapper.getUserByUserCode(userCode);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public int updatePassword(Integer id, String oldPassword, String newPassword) {
+		// TODO Auto-generated method stub
+		return userMapper.updatePassword(id, MD5Util.getMD5(oldPassword), MD5Util.getMD5(newPassword));
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public int initPassword(Integer id, String password) {
+		// TODO Auto-generated method stub
+		return userMapper.initPassword(id, MD5Util.getMD5(password));
+	}
+
 	
 
 }

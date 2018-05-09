@@ -477,3 +477,45 @@ function updateUserRoleFormSubmit(){
 		}
 	});
 }
+
+function initPassword(obj){
+	
+	if(window.confirm('您确认初始化密码？')){
+		var basePath = $("#basePath").val();
+		layer.load(1);
+		var content = $(obj).parent().parent();
+		var id = content.attr("id");
+		var submitData = {id:id};
+        $.ajax({
+    		url: basePath + "user/ajax_init_password",
+    		type: "POST",
+    		dataType: "json",
+    		data:submitData,
+    		success: function( data ) {
+    			var success = data['success'];
+    			if(success){
+    				var stateCode = data['stateCode'];
+    				var stateMessage = data['stateMessage'];
+    				if("1" == stateCode){
+    					layer.msg(stateMessage);
+    				}else{
+    					layer.msg(stateMessage);
+    				}
+    			}else{
+    				layer.msg("操作错误，请重试！");
+    			}
+    			console.log(data);
+    			
+    		},
+    		error:function(XMLHttpRequest, textStatus, errorThrown){
+    			layer.msg("未知错误，请联系管理员");
+    		},
+    		complete:function(XMLHttpRequest, textStatus){
+    			layer.closeAll('loading');
+    		}
+    	});
+     }else{
+        //alert("取消");
+        return false;
+    }
+}
