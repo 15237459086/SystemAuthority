@@ -196,7 +196,7 @@ function layerUpdatePassword(obj){
 						required: " (必需字段)"
 					}
 					,newConfirmPassword: {
-						equalTo: "#newPassword"
+						equalTo: "密码不一致"
 					}
 				}
 			});

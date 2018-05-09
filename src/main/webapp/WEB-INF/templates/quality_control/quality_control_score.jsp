@@ -133,7 +133,7 @@
  <table style="width:934px; float:left; border-collapse:collapse;" id="data_show_table">
       <thead>
 	      <tr>
-	      	  <td class="tdLabel_4">评价项目</td>
+	      	  <td class="tdLabel_4" style="width: 250px;">评价项目</td>
 		      <td class="tdLabel_4">扣分</td>
 		      <td class="tdLabel_4">其他说明</td>
 		      <td class="tdLabel_4">质控人</td>

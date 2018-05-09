@@ -214,12 +214,20 @@ function layerCreateUser(){
 						}
 					});
 				},
+				rules:{
+					confirmPassword: {
+						equalTo: "#password"
+					}
+				},
 				messages: {
 					userCode: {
 						required: " (必需字段)"
 					},password: {
-						required: " (必需字段)"
-					},userName: {
+						required: " (必需字段)",
+					},confirmPassword: {
+						equalTo: "密码不一致"
+					}
+					,userName: {
 						required: " (必需字段)",
 					},userNickName: {
 						required: " (必需字段)"

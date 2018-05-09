@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>用户管理</title>
+<title>系统权限</title>
 <style>
 #box {
 	max-width:1366px;
@@ -81,6 +81,11 @@
 		if(parent.document.getElementById("mainContent")){
 			parent.location.href=basePath+"login";
 		}
+		$(document).keyup(function(event){
+		  if(event.keyCode ==13){
+		    $("#btn_login").trigger("click");
+		  }
+		});
 		var validator = $("#loginForm").validate({
 			errorElement: "title",
 			submitHandler : function(){

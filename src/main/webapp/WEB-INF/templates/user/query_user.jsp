@@ -89,6 +89,9 @@
 		    <li class="Label_2" style="width: 60%"><input class="input_box" type="text" name="userCode" required/></li>
 		    <li class="Label_1" style="width: 40%">密码&nbsp;</li>
 		    <li class="Label_2" style="width: 60%"><input class="input_box" type="password" name="password" required/></li>
+		    <li class="Label_1" style="width: 40%">确认密码&nbsp;</li>
+		    <li class="Label_2" style="width: 60%"><input class="input_box" type="password" name="confirmPassword" required/></li>
+		    
 		    <li class="Label_1" style="width: 40%">用户名：&nbsp;</li>
 		    <li class="Label_2" style="width: 60%"><input class="input_box" type="text" name="userName" required/></li>
 		    <li class="Label_1" style="width: 40%">用户昵称：&nbsp;</li>

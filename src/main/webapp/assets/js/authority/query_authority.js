@@ -283,7 +283,7 @@ function layerUpdateAuthority(obj){
 									if("1" == stateCode){
 										layer.msg(stateMessage);
 										var authority = data['data'];
-										layer.close(layerCreateAuthorityIndex);
+										layer.close(layerUpdateAuthorityIndex);
 										updateRow(authority);
 									}else{
 										layer.msg(stateMessage);
