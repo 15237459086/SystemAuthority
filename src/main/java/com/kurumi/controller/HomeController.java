@@ -2,6 +2,7 @@ package com.kurumi.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -142,6 +143,50 @@ public class HomeController {
 		
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	@PostMapping("/romote_admin_login_check")
+	@ResponseBody
+	public RespondResult remoteAdminLoginCheck(HttpServletRequest request,HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		RespondResult respondResult = null;
+		try{
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(), "utf-8"));  
+			StringBuffer sb = new StringBuffer("");  
+			String temp;  
+			while ((temp = br.readLine()) != null) {  
+				sb.append(temp);  
+			}  
+			br.close();
+			String postDataJson = sb.toString();
+			Map<String, Object> postData = JsonUtil.jsonToPojo(postDataJson, Map.class);
+			String loginName =(String)postData.get("loginName");
+			String password =(String)postData.get("password");
+			List<Map<String, Object>>  datas = userService.getSupperAdminByLoginNameAndPassword(loginName, password);
+			if(!datas.isEmpty()){
+				respondResult = new RespondResult(true, RespondResult.successCode, "登陆成功", datas.get(0));
+			}else{
+				respondResult = new RespondResult(true, RespondResult.errorCode, "登录名或密码错误", "");
+			}
+			
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			if(e instanceof UnknownAccountException){
+				respondResult = new RespondResult(true, RespondResult.errorCode, "用户名或密码错误", "用户名或密码错误");
+			}else{
+				respondResult = new RespondResult(false, RespondResult.errorCode, e.getMessage(),e.getMessage());
+			}
+			
+			
+		}
+		
+		return respondResult;
+		
+		
+	}
 	
 	@PostMapping("/login_out")
 	@ResponseBody
