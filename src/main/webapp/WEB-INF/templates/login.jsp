@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>系统权限</title>
+<title>病案系统-系统权限</title>
 <style>
 #box {
 	max-width:1366px;
