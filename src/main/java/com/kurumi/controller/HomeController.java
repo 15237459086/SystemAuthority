@@ -24,12 +24,21 @@ import com.kurumi.service.UserService;
 import com.kurumi.util.JsonUtil;
 import com.kurumi.util.MD5Util;
 
+/**
+ * 默认控制器
+ * @author lyh
+ * @version 1.1
+ */
 @Controller
 public class HomeController {
 
 	@Autowired
 	private UserService userService;
 	
+	/**
+	 * 默认首页
+	 * @return
+	 */
 	@GetMapping("/")
 	public String home(){
 		
@@ -38,16 +47,28 @@ public class HomeController {
 	}
 	
 	/*@RequiresRoles("admin")*/
+	/**
+	 * 首页
+	 * @return
+	 */
 	@GetMapping("/index")
 	public String index(){
 		return "index.default";
 	}
 	
+	/**
+	 * 登陆页
+	 * @return
+	 */
 	@GetMapping("/login")
 	public String login(){
 		return "login";
 	}
 	
+	/**
+	 * 退出
+	 * @return
+	 */
 	@GetMapping("/login_out")
 	public String loginOut(){
 		Subject subject=SecurityUtils.getSubject();
@@ -59,7 +80,14 @@ public class HomeController {
 		return "redirect:/login"; 
 	}
 	
-	
+	/**
+	 * 本地登录
+	 * @param loginName
+	 * @param password
+	 * @param verificationCode
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("/login_check")
 	@ResponseBody
 	public RespondResult loginCheck(String loginName,String password,String verificationCode,HttpServletRequest request){
@@ -98,7 +126,12 @@ public class HomeController {
 		
 	}
 	
-	
+	/**
+	 * 远程登陆
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	@PostMapping("/romote_login_check")
 	@ResponseBody

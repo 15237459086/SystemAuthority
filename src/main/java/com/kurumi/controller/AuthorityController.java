@@ -18,6 +18,11 @@ import com.kurumi.pojo.RespondResult;
 import com.kurumi.query.AuthorityQuery;
 import com.kurumi.service.AuthorityService;
 
+/**
+ * 权限控制器
+ * @author lyh
+ * @version 1.1
+ */
 @Controller
 @RequestMapping("authority")
 public class AuthorityController {
@@ -26,12 +31,21 @@ public class AuthorityController {
 	@Autowired
 	private AuthorityService authorityService;
 	
+	/**
+	 * 进入权限页面
+	 * @return
+	 */
 	@GetMapping("query_authority")
 	public String queryAuthority(){
 		return "authority/query_authority";
 	}
 	
-	
+	/**
+	 * Ajax查询权限（通过AuthorityQuery，不区分是否禁用）
+	 * @param params
+	 * @param request
+	 * @return
+	 */
 	@GetMapping("/ajax_query_authority")
 	@ResponseBody
 	public RespondResult ajaxQueryAuthority(AuthorityQuery params,HttpServletRequest request){
@@ -55,7 +69,12 @@ public class AuthorityController {
 	}
 	
 	
-	
+	/**
+	 * Ajax创建权限（通过Authority，默认启用）
+	 * @param authority
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("/ajax_create_authority")
 	@ResponseBody
 	public RespondResult ajaxCreateAuthority(Authority authority,HttpServletRequest request){
@@ -79,7 +98,12 @@ public class AuthorityController {
 		return respondResult;
 	}
 	
-	
+	/**
+	 * Ajax更新权限（通过Authority）
+	 * @param authority
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("/ajax_update_authority")
 	@ResponseBody
 	public RespondResult ajaxUpdateAuthority(Authority authority,HttpServletRequest request){
